@@ -1,0 +1,22 @@
+@if(media >= 7){
+    <p>Você passou!</p>
+}@else if (media >= 5){
+    <p>Você está de recuperação!</p>
+}@else {
+    <p>Você está reprovado lol</p>
+}
+
+<hr>
+
+@switch (linguagem) {
+    @case ('HTML') {<p>Linguagem de marcação</p>}
+    @case ('CSS')  {<p>Linguagem de estilos</p>}
+    @case ('JS')   {<p>Linguagem de programação</p>}
+    @default       {<p>Linguagem desconhecida</p>}
+}
+
+<hr>
+
+@for (nome of nomes; track $index) {
+    <p>{{$index}} -- {{nome}}</p>
+}

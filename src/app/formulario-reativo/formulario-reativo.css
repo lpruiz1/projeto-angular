@@ -1,0 +1,42 @@
+.container {
+    padding: 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.campo label{
+    width: 80px;
+}
+
+.form-incompleto {
+    border: 2px dashed orangered;
+    padding: 10px;
+}
+
+.form-completo {
+    border: 2px solid green;
+    padding: 10px
+}
+
+.resultado {
+    margin-top: 15px;
+    opacity: 0.5;
+}
+
+.resultado.completo {
+    opacity: 1;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+}

@@ -1,0 +1,31 @@
+<div class="container" [ngStyle]="estiloForm">
+    <form [formGroup]="pessoa" [ngClass]="{'form-completo': formCompleto, 'form-incompleto': !formCompleto}">
+        <div class="campo">
+            <label>Nome</label>
+            <input type="text" formControlName="nome">
+        </div>
+        <div class="campo">
+            <label>Idade</label>
+            <input type="number" formControlName="idade">
+        </div>
+        <div class="campo">
+            <label>Peso</label>
+            <input type="number" formControlName="peso">
+        </div>
+        <div class="campo">
+            <label>Altura</label>
+            <input type="number" formControlName="altura">
+        </div>
+    </form>
+
+    <button (click)="alterarEstilo()">Alternar estilo</button>
+
+    <hr>
+
+    <div class="resultado" [ngClass]="{'completo': formCompleto}">
+        <p>Nome: {{ pessoa.value.nome }}</p>
+        <p>Idade: {{ pessoa.value.idade }}</p>
+        <p>Peso: {{ pessoa.value.peso }}</p>
+        <p>Altura: {{ pessoa.value.altura }}</p>
+    </div>
+</div>

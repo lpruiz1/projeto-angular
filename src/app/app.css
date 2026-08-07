@@ -1,0 +1,12 @@
+.pagina {
+  min-height: 100vh;
+  background-color: #cfe8fc;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
