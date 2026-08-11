@@ -1,12 +1,21 @@
 <app-card [title]="studentIdInEdition !== null ? 'Editar aluno' : 'Cadastrar aluno'">
 
   <form [formGroup]="form" (ngSubmit)="save()">
+
     <div class="field">
       <label>Matrícula</label>
       <input type="text" formControlName="registrationId">
     </div>
-    @if (form.get('registrationId')?.hasError('registrationIdTaken') &&
-         (form.get('registrationId')?.dirty || form.get('registrationId')?.touched)) {
+    @if (hasError('registrationId', 'required')) {
+      <span class="error">A matrícula é obrigatória.</span>
+    }
+    @if (hasError('registrationId', 'minlength')) {
+      <span class="error">A matrícula precisa ter pelo menos 4 dígitos.</span>
+    }
+    @if (hasError('registrationId', 'pattern')) {
+      <span class="error">A matrícula deve conter apenas números.</span>
+    }
+    @if (hasError('registrationId', 'registrationIdTaken')) {
       <span class="error">Essa matrícula já está cadastrada.</span>
     }
 
@@ -14,11 +23,26 @@
       <label>Nome</label>
       <input type="text" formControlName="name">
     </div>
+    @if (hasError('name', 'required')) {
+      <span class="error">O nome é obrigatório.</span>
+    }
+    @if (hasError('name', 'minlength')) {
+      <span class="error">O nome precisa ter pelo menos 3 letras.</span>
+    }
+    @if (hasError('name', 'pattern')) {
+      <span class="error">O nome deve conter apenas letras.</span>
+    }
 
     <div class="field">
       <label>Idade</label>
       <input type="number" formControlName="age">
     </div>
+    @if (hasError('age', 'required')) {
+      <span class="error">A idade é obrigatória.</span>
+    }
+    @if (hasError('age', 'min') || hasError('age', 'max')) {
+      <span class="error">A idade deve estar entre 0 e 120.</span>
+    }
 
     <div class="actions">
       <button type="submit" [disabled]="form.invalid">

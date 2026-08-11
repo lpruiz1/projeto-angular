@@ -23,33 +23,45 @@ export class StudentForm implements OnInit {
   form = new FormGroup({
     registrationId: new FormControl<string | null>('', [
       Validators.required,
+      Validators.minLength(4),
+      Validators.pattern(/^[0-9]+$/),
       uniqueRegistrationIdValidator(this.studentsService)
     ]),
-    name: new FormControl<string | null>('', Validators.required),
-    age: new FormControl<number | null>(null, Validators.required),
+    name: new FormControl<string | null>('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.pattern(/^[A-Za-zÀ-ÿ\s]+$/)
+    ]),
+    age: new FormControl<number | null>(null, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(100)
+    ]),
   });
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      const student = this.studentsService.findById(Number(idParam));
-      if (student) {
-        this.studentIdInEdition = student.id;
+  const idParam = this.route.snapshot.paramMap.get('id');
+  if (idParam) {
+    const student = this.studentsService.findById(Number(idParam));
+    if (student) {
+      this.studentIdInEdition = student.id;
 
-        this.form.get('registrationId')?.setValidators([
-          Validators.required,
-          uniqueRegistrationIdValidator(this.studentsService, student.id)
-        ]);
-        this.form.get('registrationId')?.updateValueAndValidity();
+      this.form.get('registrationId')?.setValidators([
+        Validators.required,
+        Validators.minLength(4),
+        Validators.pattern(/^[0-9]+$/),
+        uniqueRegistrationIdValidator(this.studentsService, student.id)
+      ]);
+      this.form.get('registrationId')?.updateValueAndValidity();
 
-        this.form.setValue({
-          registrationId: student.registrationId,
-          name: student.name,
-          age: student.age,
-        });
-      }
+      this.form.setValue({
+        registrationId: student.registrationId,
+        name: student.name,
+        age: student.age,
+      });
     }
   }
+}
 
   save(): void {
     if (this.form.invalid) {
@@ -70,5 +82,10 @@ export class StudentForm implements OnInit {
 
   cancel(): void {
     this.router.navigate(['/students']);
+  }
+
+  hasError(fieldName: string, errorName: string): boolean {
+    const control = this.form.get(fieldName);
+    return !!control && control.hasError(errorName) && (control.dirty || control.touched);
   }
 }
