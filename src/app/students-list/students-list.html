@@ -1,8 +1,6 @@
 <app-card title="Alunos cadastrados">
 
-  <div class="list-header">
-    <button (click)="goToNewStudent()">+ Novo aluno</button>
-  </div>
+  <button cardActions (click)="goToNewStudent()">+ Novo aluno</button>
 
   @if (students().length === 0) {
     <p class="empty">Nenhum aluno cadastrado ainda.</p>
@@ -24,7 +22,7 @@
             <td>{{ student.age }}</td>
             <td>
               <button (click)="edit(student.id)">Editar</button>
-              <button class="delete" (click)="remove(student.id)">Excluir</button>
+              <button class="delete" (click)="askToRemove(student.id)">Excluir</button>
             </td>
           </tr>
         }
@@ -33,3 +31,11 @@
   }
 
 </app-card>
+
+@if (studentIdPendingDeletion() !== null) {
+  <app-confirm-dialog
+    message="Tem certeza que deseja excluir esse aluno?"
+    (confirmed)="confirmRemoval()"
+    (cancelled)="cancelRemoval()">
+  </app-confirm-dialog>
+}
