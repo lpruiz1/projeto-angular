@@ -1,0 +1,35 @@
+<app-card title="Alunos cadastrados">
+
+  <div class="list-header">
+    <button (click)="goToNewStudent()">+ Novo aluno</button>
+  </div>
+
+  @if (students().length === 0) {
+    <p class="empty">Nenhum aluno cadastrado ainda.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Matrícula</th>
+          <th>Nome</th>
+          <th>Idade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (student of students(); track student.id) {
+          <tr>
+            <td>{{ student.registrationId }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.age }}</td>
+            <td>
+              <button (click)="edit(student.id)">Editar</button>
+              <button class="delete" (click)="remove(student.id)">Excluir</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+</app-card>

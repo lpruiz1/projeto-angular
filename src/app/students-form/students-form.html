@@ -1,0 +1,31 @@
+<app-card [title]="studentIdInEdition !== null ? 'Editar aluno' : 'Cadastrar aluno'">
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="field">
+      <label>Matrícula</label>
+      <input type="text" formControlName="registrationId">
+    </div>
+    @if (form.get('registrationId')?.hasError('registrationIdTaken') &&
+         (form.get('registrationId')?.dirty || form.get('registrationId')?.touched)) {
+      <span class="error">Essa matrícula já está cadastrada.</span>
+    }
+
+    <div class="field">
+      <label>Nome</label>
+      <input type="text" formControlName="name">
+    </div>
+
+    <div class="field">
+      <label>Idade</label>
+      <input type="number" formControlName="age">
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">
+        {{ studentIdInEdition !== null ? 'Salvar edição' : 'Cadastrar' }}
+      </button>
+      <button type="button" class="secondary" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+
+</app-card>
