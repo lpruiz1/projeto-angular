@@ -1,57 +1,67 @@
-  <div class="card">
-    <h2>{{ idEdicao !== null ? 'Editar aluno' : 'Cadastrar aluno' }}</h2>
+<div class="card">
+  <h2>{{ studentIdInEdition !== null ? 'Editar aluno' : 'Cadastrar aluno' }}</h2>
 
-    <form [formGroup]="form" (ngSubmit)="salvar()">
-      <div class="campo">
-        <label>Nome</label>
-        <input type="text" formControlName="nome">
-      </div>
-
-      <div class="campo">
-        <label>Idade</label>
-        <input type="number" formControlName="idade">
-      </div>
-
-      <div class="acoes">
-        <button type="submit" [disabled]="form.invalid">
-          {{ idEdicao !== null ? 'Salvar edição' : 'Cadastrar' }}
-        </button>
-
-        @if (idEdicao !== null) {
-          <button type="button" class="secundario" (click)="cancelarEdicao()">
-            Cancelar
-          </button>
-        }
-      </div>
-    </form>
-  </div>
-
-  <div class="card">
-    <h2>Alunos cadastrados</h2>
-
-    @if (alunos.length === 0) {
-      <p class="vazio">Nenhum aluno cadastrado ainda.</p>
-    } @else {
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Idade</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (aluno of alunos; track aluno.id) {
-            <tr>
-              <td>{{aluno.nome}}</td>
-              <td>{{aluno.idade}}</td>
-              <td>
-                <button (click)="editar(aluno)">Editar</button>
-                <button class="excluir" (click)="remover(aluno.id)">Excluir</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="field">
+      <label>Matrícula</label>
+      <input type="text" formControlName="registrationId">
+    </div>
+    @if (form.get('registrationId')?.hasError('registrationIdTaken')) {
+      <span class="error">Essa matrícula já está cadastrada.</span>
     }
-  </div>
+
+    <div class="field">
+      <label>Nome</label>
+      <input type="text" formControlName="name">
+    </div>
+
+    <div class="field">
+      <label>Idade</label>
+      <input type="number" formControlName="age">
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">
+        {{ studentIdInEdition !== null ? 'Salvar edição' : 'Cadastrar' }}
+      </button>
+
+      @if (studentIdInEdition !== null) {
+        <button type="button" class="secondary" (click)="cancelEdition()">
+          Cancelar
+        </button>
+      }
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Alunos cadastrados</h2>
+
+  @if (students().length === 0) {
+    <p class="empty">Nenhum aluno cadastrado ainda.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Matrícula</th>
+          <th>Nome</th>
+          <th>Idade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (student of students(); track student.id) {
+          <tr>
+            <td>{{ student.registrationId }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.age }}</td>
+            <td>
+              <button (click)="edit(student)">Editar</button>
+              <button class="delete" (click)="remove(student.id)">Excluir</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

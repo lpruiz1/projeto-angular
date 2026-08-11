@@ -1,71 +1,87 @@
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CardComponent } from '../card-component/card-component';
-
-interface Aluno {
-  id:number;
-  nome:string;
-  idade:number;
-}
+import { StudentsService, Student } from '../services/students';
+import { uniqueRegistrationIdValidator } from '../validators/registration-id.validator';
 
 @Component({
   selector: 'app-crud-alunos',
-  imports: [CommonModule, ReactiveFormsModule, CardComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './crud-alunos.html',
   styleUrl: './crud-alunos.css',
 })
 export class CrudAlunos {
 
-  alunos:Aluno[] = [];
-  proximoId:number = 1;
-  idEdicao:number | null = null;
+  private studentsService = inject(StudentsService);
+
+  readonly students = this.studentsService.students;
+
+  studentIdInEdition: number | null = null;
 
   form = new FormGroup({
-    nome: new FormControl<string | null> ('', Validators.required),
-    idade: new FormControl<number | null> (null, Validators.required)
-  })
+    registrationId: new FormControl<string | null>('', [
+      Validators.required,
+      uniqueRegistrationIdValidator(this.studentsService)
+    ]),
+    name: new FormControl<string | null>('', Validators.required),
+    age: new FormControl<number | null>(null, Validators.required),
+  });
 
-  salvar():void {
+  save(): void {
     if (this.form.invalid) return;
 
-    const { nome, idade } = this.form.value;
+    const { registrationId, name, age } = this.form.value;
 
-    if (this.idEdicao !== null) {
-      const aluno = this.alunos.find(a => a.id === this.idEdicao);
-      if (aluno) {
-        aluno.nome = nome!;
-        aluno.idade = idade!;
-      }
-      this.idEdicao = null;
+    if (this.studentIdInEdition !== null) {
+      this.studentsService.update(
+        this.studentIdInEdition,
+        registrationId!,
+        name!,
+        age!
+      );
+      this.studentIdInEdition = null;
     } else {
-      this.alunos.push({
-        id: this.proximoId++,
-        nome: nome!,
-        idade: idade!,
-      });
+      this.studentsService.add(registrationId!, name!, age!);
     }
 
+    this.resetRegistrationValidator();
     this.form.reset();
   }
 
-  editar(aluno:Aluno):void {
-    this.idEdicao = aluno.id;
+  edit(student: Student): void {
+    this.studentIdInEdition = student.id;
+
+    this.form.get('registrationId')?.setValidators([
+      Validators.required,
+      uniqueRegistrationIdValidator(this.studentsService, student.id)
+    ]);
+    this.form.get('registrationId')?.updateValueAndValidity();
+
     this.form.setValue({
-      nome: aluno.nome,
-      idade: aluno.idade
+      registrationId: student.registrationId,
+      name: student.name,
+      age: student.age,
     });
   }
 
-  remover(id:number):void {
-    this.alunos = this.alunos.filter(a => a.id !== id);
-    if (this.idEdicao === id){
-      this.cancelarEdicao()
+  remove(id: number): void {
+    this.studentsService.remove(id);
+    if (this.studentIdInEdition === id) {
+      this.cancelEdition();
     }
   }
 
-  cancelarEdicao(): void{
-    this.idEdicao = null;
+  cancelEdition(): void {
+    this.studentIdInEdition = null;
+    this.resetRegistrationValidator();
     this.form.reset();
+  }
+
+  private resetRegistrationValidator(): void {
+    this.form.get('registrationId')?.setValidators([
+      Validators.required,
+      uniqueRegistrationIdValidator(this.studentsService)
+    ]);
+    this.form.get('registrationId')?.updateValueAndValidity();
   }
 }
