@@ -1,0 +1,22 @@
+@use '../styles/variables' as vars;
+
+.card {
+  background-color: #ffffff;
+  border-radius: vars.$card-radius;
+  box-shadow: vars.$card-shadow;
+  padding: vars.$card-padding;
+  width: 100%;
+  max-width: vars.$card-max-width;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+
+    h2 {
+      margin: 0;
+      color: vars.$color-text-heading;
+    }
+  }
+}

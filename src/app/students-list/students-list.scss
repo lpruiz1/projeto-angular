@@ -1,0 +1,42 @@
+@use '../styles/variables' as vars;
+@use '../styles/mixins' as mix;
+
+.empty {
+  color: vars.$color-text-muted;
+  font-style: italic;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eceff1;
+  }
+
+  th {
+    color: vars.$color-text-label;
+    font-weight: 600;
+  }
+
+  td button {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    margin-right: 5px;
+  }
+}
+
+button {
+  @include mix.button-variant(vars.$color-primary, vars.$color-primary-hover);
+
+  &.delete {
+    background-color: vars.$color-danger;
+
+    &:hover {
+      background-color: vars.$color-danger-hover;
+    }
+  }
+}

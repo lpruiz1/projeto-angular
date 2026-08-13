@@ -10,7 +10,7 @@ import { CardComponent } from '../card-component/card-component';
   selector: 'app-student-form',
   imports: [CommonModule, ReactiveFormsModule, CardComponent],
   templateUrl: './students-form.html',
-  styleUrl: './students-form.css',
+  styleUrl: './students-form.scss',
 })
 export class StudentForm implements OnInit {
 

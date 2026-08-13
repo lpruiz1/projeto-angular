@@ -4,7 +4,7 @@ import { Component, input, output } from '@angular/core';
   selector: 'app-confirm-dialog',
   imports: [],
   templateUrl: './confirm-dialog.html',
-  styleUrl: './confirm-dialog.css',
+  styleUrl: './confirm-dialog.scss',
 })
 export class ConfirmDialog {
   message = input<string>('Tem certeza?');

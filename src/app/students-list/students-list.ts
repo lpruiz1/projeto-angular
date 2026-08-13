@@ -9,7 +9,7 @@ import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
   selector: 'app-student-list',
   imports: [CommonModule, CardComponent, ConfirmDialog],
   templateUrl: './students-list.html',
-  styleUrl: './students-list.css',
+  styleUrl: './students-list.scss',
 })
 export class StudentList {
 

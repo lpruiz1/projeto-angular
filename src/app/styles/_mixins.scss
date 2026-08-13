@@ -1,0 +1,20 @@
+@use 'variables' as vars;
+
+@mixin button-base {
+  padding: 8px 16px;
+  border: none;
+  border-radius: vars.$button-radius;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+@mixin button-variant($bg, $bg-hover) {
+  @include button-base;
+  background-color: $bg;
+  color: white;
+
+  &:hover {
+    background-color: $bg-hover;
+  }
+}

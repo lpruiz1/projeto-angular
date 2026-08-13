@@ -1,0 +1,85 @@
+@use 'variables';
+
+@mixin button ($background-color, $hover-color){
+  background: $background-color;
+  color: variables.$button-text-color;
+  padding: variables.$button-padding;
+  border: none;
+  border-radius: variables.$border-radius;
+
+  &:hover{
+    background-color: $hover-color;
+  }
+}
+
+.save-button {
+  @include button(green, darkgreen);
+}
+
+.delete-button {
+  @include button(red, darkred);
+}
+
+// .botao-salvar {
+//   background-color: #4caf50;
+//   color: variables.$button-text-color;
+//   padding: variables.$button-padding;
+//   border: none;
+//   border-radius: variables.$border-radius;
+
+//   &:hover{
+//     background-color: #388e3c;
+//   }
+// }
+
+/* .botao-salvar:hover {
+  background-color: #388e3c;
+} */
+
+// .botao-cancelar {
+//   background-color: #f44336;
+//   color: white;
+//   padding: variables.$button-padding;
+//   border: none;
+//   border-radius: variables.$border-radius;
+
+//   &:hover{
+//     background-color: #d32f2f;
+//   }
+// }
+
+/* .botao-cancelar:hover {
+  background-color: #d32f2f;
+} */
+
+.card {
+  background: white;
+  border-radius: 6px;
+  padding: 16px;
+  
+  .title{
+    font-size: 18px;
+    color: #333;
+  }
+
+  .subtitle{
+    font-size: 14px;
+    color: #777
+  }
+}
+
+/* .cartao {
+  background: white;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.cartao .titulo {
+  font-size: 18px;
+  color: #333;
+}
+
+.cartao .subtitulo {
+  font-size: 14px;
+  color: #777;
+} */

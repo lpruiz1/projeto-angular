@@ -1,0 +1,60 @@
+@use '../styles/variables' as vars;
+@use '../styles/mixins' as mix;
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+
+  label {
+    width: 60px;
+    font-weight: 600;
+    color: vars.$color-text-label;
+  }
+
+  input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid vars.$color-border;
+    border-radius: vars.$input-radius;
+    outline: none;
+
+    &:focus {
+      border-color: vars.$color-border-focus;
+      box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2);
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.error {
+  color: vars.$color-error;
+  font-size: 0.85rem;
+  display: block;
+  margin-top: -8px;
+  margin-bottom: 10px;
+}
+
+button {
+  @include mix.button-variant(vars.$color-primary, vars.$color-primary-hover);
+
+  &:disabled {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+  }
+
+  &.secondary {
+    background-color: vars.$color-secondary-bg;
+    color: vars.$color-secondary-text;
+
+    &:hover {
+      background-color: vars.$color-secondary-bg-hover;
+    }
+  }
+}
