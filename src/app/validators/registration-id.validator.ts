@@ -3,7 +3,7 @@ import { StudentsService } from "../services/students";
 
 export function uniqueRegistrationIdValidator (
     studentsService: StudentsService,
-    currentStudentId?: number | null 
+    currentStudentId?: string | null 
 ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         const value = control.value;

@@ -1,0 +1,20 @@
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+
+  &.badge-child {
+    background-color: #66bb6a;
+  }
+
+  &.badge-teen {
+    background-color: #ffa726;
+  }
+
+  &.badge-adult {
+    background-color: #42a5f5;
+  }
+}

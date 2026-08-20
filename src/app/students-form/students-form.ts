@@ -18,7 +18,7 @@ export class StudentForm implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  studentIdInEdition: number | null = null;
+  studentIdInEdition: string | null = null;
 
   form = new FormGroup({
     registrationId: new FormControl<string | null>('', [
@@ -42,7 +42,7 @@ export class StudentForm implements OnInit {
   ngOnInit(): void {
   const idParam = this.route.snapshot.paramMap.get('id');
   if (idParam) {
-    const student = this.studentsService.findById(Number(idParam));
+    const student = this.studentsService.findById(idParam);
     if (student) {
       this.studentIdInEdition = student.id;
 
@@ -64,20 +64,20 @@ export class StudentForm implements OnInit {
 }
 
   save(): void {
-    if (this.form.invalid) {
+  if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     const { registrationId, name, age } = this.form.value;
 
-    if (this.studentIdInEdition !== null) {
-      this.studentsService.update(this.studentIdInEdition, registrationId!, name!, age!);
-    } else {
-      this.studentsService.add(registrationId!, name!, age!);
-    }
+    const operation$ = this.studentIdInEdition !== null
+      ? this.studentsService.update(this.studentIdInEdition, registrationId!, name!, age!)
+      : this.studentsService.add(registrationId!, name!, age!);
 
-    this.router.navigate(['/students']);
+    operation$.subscribe(() => {
+      this.router.navigate(['/students']);
+    });
   }
 
   cancel(): void {

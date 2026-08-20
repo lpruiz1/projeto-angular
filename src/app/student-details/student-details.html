@@ -1,0 +1,17 @@
+@if (student(); as currentStudent) {
+  <app-card [title]="currentStudent.name">
+    <p><strong>Matrícula:</strong> {{ currentStudent.registrationId }}</p>
+    <p><strong>Nome:</strong> {{ currentStudent.name }}</p>
+    <p><strong>Idade:</strong> {{ currentStudent.age }} anos</p>
+
+    <div class="actions">
+      <button (click)="goToEdit()">Editar</button>
+      <button class="secondary" (click)="goBack()">Voltar</button>
+    </div>
+  </app-card>
+} @else {
+  <app-card title="Aluno não encontrado">
+    <p>Não foi possível localizar esse aluno.</p>
+    <button (click)="goBack()">Voltar para a listagem</button>
+  </app-card>
+}

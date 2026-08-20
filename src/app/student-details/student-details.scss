@@ -1,0 +1,21 @@
+@use '../styles/variables' as vars;
+@use '../styles/mixins' as mix;
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+button {
+  @include mix.button-variant(vars.$color-primary, vars.$color-primary-hover);
+
+  &.secondary {
+    background-color: vars.$color-secondary-bg;
+    color: vars.$color-secondary-text;
+
+    &:hover {
+      background-color: vars.$color-secondary-bg-hover;
+    }
+  }
+}

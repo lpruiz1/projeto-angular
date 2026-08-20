@@ -3,7 +3,7 @@
   <button cardActions (click)="goToNewStudent()">+ Novo aluno</button>
 
   @if (students().length === 0) {
-    <p class="empty">Nenhum aluno cadastrado ainda.</p>
+    <app-empty-state message="Nenhum aluno cadastrado ainda." icon="🎓"></app-empty-state>
   } @else {
     <table>
       <thead>
@@ -18,8 +18,13 @@
         @for (student of students(); track student.id) {
           <tr>
             <td>{{ student.registrationId }}</td>
-            <td>{{ student.name }}</td>
-            <td>{{ student.age }}</td>
+            <td>
+              <a [routerLink]="['/students', student.id]">{{ student.name }}</a>
+            </td>
+            <td>
+              {{ student.age }}
+              <app-age-badge [age]="student.age"></app-age-badge>
+            </td>
             <td>
               <button (click)="edit(student.id)">Editar</button>
               <button class="delete" (click)="askToRemove(student.id)">Excluir</button>
